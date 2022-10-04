@@ -2,32 +2,44 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  # image tags are relative; to specify an image repo (e.g. GCR), you
-  # must provide a "default repo" using one of the methods described
-  # here:
-  # https://skaffold.dev/docs/concepts/#image-repository-handling
+    # image tags are relative; to specify an image repo (e.g. GCR), you
+    # must provide a "default repo" using one of the methods described
+    # here:
+    # https://skaffold.dev/docs/concepts/#image-repository-handling
     - image: adservice
-      context: src/adservice
+      docker:
+        dockerfile: src/adservice/Dockerfile
     - image: cartservice
-      context: src/cartservice
+      docker:
+        dockerfile: src/cartservice/Dockerfile
     - image: checkoutservice
-      context: src/checkoutservice
+      docker:
+        dockerfile: src/checkoutservice/Dockerfile
     - image: currencyservice
-      context: src/currencyservice
+      docker:
+        dockerfile: src/currencyservice/Dockerfile
     - image: emailservice
       context: src/emailservice
+      docker:
+        dockerfile: src/emailservice/Dockerfile
     - image: frontend
-      context: src/frontend
+      docker:
+        dockerfile: src/frontend/Dockerfile
     - image: loadgenerator
-      context: src/loadgenerator
+      docker:
+        dockerfile: src/loadgenerator/Dockerfile
     - image: paymentservice
-      context: src/paymentservice
+      docker:
+        dockerfile: src/paymentservice/Dockerfile
     - image: productcatalogservice
-      context: src/productcatalogservice
+      docker:
+        dockerfile: src/productcatalogservice/Dockerfile
     - image: recommendationservice
-      context: src/recommendationservice
+      docker:
+        dockerfile: src/recommendationservice/Dockerfile
     - image: shippingservice
-      context: src/shippingservice
+      docker:
+        dockerfile: src/shippingservice/Dockerfile
   tagPolicy:
     gitCommit: {}
   local:
@@ -36,4 +48,3 @@ deploy:
   kubectl:
     manifests:
       - ./kubernetes-manifests/**.yaml
-
