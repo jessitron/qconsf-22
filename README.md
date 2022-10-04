@@ -1,5 +1,8 @@
 # ![otel-photo](./docs/img/opentelemetry-logo-nav.png) OpenTelemetry Demo
 
+This repository is forked from [Open-telemetry/opentelemetry-demo](https://github.com/open-telemetry/opentelemetry-demo) (in [October of 2022](https://github.com/open-telemetry/opentelemetry-demo/commit/b6e75ee44cc41bb8315e5e116cc1ac4807ef5e1d))
+by the Honeycomb DevRel team, in order to create a workshop.
+
 [![Slack](https://img.shields.io/badge/slack-@cncf/otel/demo-brightgreen.svg?logo=slack)](https://cloud-native.slack.com/archives/C03B4CWV4DA)
 [![Version](https://img.shields.io/github/v/release/open-telemetry/opentelemetry-demo?color=blueviolet)](https://github.com/open-telemetry/opentelemetry-demo/releases)
 [![Commits](https://img.shields.io/github/commits-since/open-telemetry/opentelemetry-demo/latest?color=ff69b4&include_prereleases)](https://github.com/open-telemetry/opentelemetry-demo/graphs/commit-activity)
