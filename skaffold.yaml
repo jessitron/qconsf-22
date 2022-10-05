@@ -16,8 +16,12 @@ build:
       docker:
         dockerfile: src/checkoutservice/Dockerfile
     - image: currencyservice
+      context: src/currencyservice
       docker:
         dockerfile: src/currencyservice/Dockerfile
+        buildArgs:
+          GRPC_VERSION: 1.46.0
+          OPENTELEMETRY_VERSION: 1.5.0
     - image: emailservice
       context: src/emailservice
       docker:
