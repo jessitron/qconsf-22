@@ -35,3 +35,5 @@ src/frontend/cypress/screenshots
 vendor/
 composer.lock
 .venv
+
+aws
