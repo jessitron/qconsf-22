@@ -20,8 +20,6 @@ COPY ./src/paymentservice/package*.json ./
 
 RUN apk add --no-cache python3 make g++ && npm ci --omit=dev
 
-COPY ./src/paymentservice/ ./
-COPY ./pb/demo.proto ./demo.proto
 # -----------------------------------------------------------------------------
 
 FROM node:16-alpine
@@ -32,6 +30,8 @@ ENV NODE_ENV production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules/ ./node_modules/
 
+COPY ./src/paymentservice/ ./
+COPY ./pb/demo.proto ./demo.proto
 
 EXPOSE ${PAYMENT_SERVICE_PORT}
 ENTRYPOINT [ "node", "--require", "./tracing.js", "./index.js" ]
