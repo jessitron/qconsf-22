@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1beta2
+apiVersion: skaffold/v2beta29
 kind: Config
 build:
   artifacts:
@@ -49,6 +49,23 @@ build:
   local:
     useBuildkit: false
 deploy:
-  kubectl:
-    manifests:
-      - ./kubernetes-manifests/**.yaml
+  helm:
+    releases:
+      - name: workshop-release
+        chartPath: chart
+        recreatePods: false
+        skipBuildDependencies: false
+        artifactOverrides:
+          components.cartService.image: cartservice
+          components.recommendationService.image: recommendationservice
+          components.shippingService.image: shippingservice
+          components.paymentService.image: paymentservice
+          components.productCatalogService.image: productcatalogservice
+          components.loadgenerator.image: loadgenerator
+          components.currencyService.image: currencyservice
+          components.checkoutService.image: checkoutservice
+          components.adService.image: adservice
+          components.emailService.image: emailservice
+          components.frontend.image: frontend
+        useHelmSecrets: false
+        wait: false
