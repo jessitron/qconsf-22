@@ -36,3 +36,7 @@ internal
 ./src/featureflagservice/priv/static/cache_manifest.json
 ###################################
 
+.src/cartservice/src/bin/
+.src/cartservice/src/obj/
+.src/cartservice/tests/bin/
+.src/cartservice/tests/obj/
