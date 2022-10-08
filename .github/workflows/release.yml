@@ -33,7 +33,7 @@ jobs:
 
       - name: "Set kubecontext"
         run: |
-          aws eks --region $AWS_REGION update-kubeconfig --name ${{ secrets.AWS_ECR_REPO }}
+          aws eks --region $AWS_REGION update-kubeconfig --name ${{ secrets.AWS_EKS_CLUSTER_NAME }}
 
       - name: Log in to Amazon ECR
         id: login-ecr
