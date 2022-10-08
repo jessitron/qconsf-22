@@ -27,13 +27,9 @@ jobs:
 
       - uses: azure/setup-helm@v3
 
-      - name: "test ecr login"
-        run: |
-          aws ecr get-login-password --region $AWS_REGION
-
       - name: "Set kubecontext"
         run: |
-          aws eks --region $AWS_REGION update-kubeconfig --name ${{ secrets.AWS_EKS_CLUSTER_NAME }}
+          aws eks --region us-east-1 update-kubeconfig --name otel-workshop-oct22
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -44,4 +40,4 @@ jobs:
         with:
           command: run
           repository: ${{ secrets.AWS_ECR_REPO }}
-          kube-context: 'arn:aws:eks:$AWS_REGION:${{ secrets.AWS_ACCOUNT }}:cluster/${{ secrets.AWS_EKS_CLUSTER_NAME }}'
+          kube-context: 'arn:aws:eks:us-east-1:414852377253:cluster/otel-workshop-oct22'
