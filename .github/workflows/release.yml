@@ -1,51 +1,47 @@
 name: "Release"
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+     - main
 
 jobs:
   build_and_push_images:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     env:
       RELEASE_VERSION: "${{ github.event.release.tag_name }}"
-      DOCKERHUB_REPO: "otel/demo"
-      GHCR_REPO: "ghcr.io/open-telemetry/demo"
+      AWS_REGION: us-east-1
 
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      # limit docker push image concurrency to 1
-      # to avoid github package return 429 ratelimit error
-      - name: Set docker upload concurrent
+      - name: Cache skaffold image builds & config
+        uses: actions/cache@v2
+        with:
+          path: ~/.skaffold/
+          key: fixed
+
+      - name: Install kustomize, kubectl and skaffold
+        uses: daisaru11/setup-cd-tools@v1
+        with:
+          kubectl: '1.19.2'
+          helm: '3.10.0'
+          skaffold: '1.14.0'
+
+      - name: "Login to ECR"
         run: |
-          echo $'{"max-concurrent-uploads": 1}' | sudo dd status=none of=/etc/docker/daemon.json
-          sudo service docker restart
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ECR_REPO
+        env:
+          AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+          AWS_SECRET_ACCESS_KEY: $AWS_SECRET
+          AWS_DEFAULT_REGION: $AWS_REGION
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: prepare build env
-        run: make build-env-file
-
-      - name: build and push ghcr docker image
-        run: make build-and-push-ghcr
-
-      - name: build and push dockerhub image
-        run: make build-and-push-dockerhub
+      - name: Build and deploy to cluster
+        run: skaffold run --kube-context 'arn:aws:eks:$AWS_REGION:$AWS_ACCOUNT:cluster/$AWS_EKS_CLUSTER_NAME'
+        env:
+          SKAFFOLD_DEFAULT_REPO: $AWS_ECR_REPO
+          AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
+          AWS_SECRET_ACCESS_KEY: $AWS_SECRET
+          AWS_DEFAULT_REGION: $AWS_REGION
