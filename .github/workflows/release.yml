@@ -25,9 +25,9 @@ jobs:
 
       - uses: azure/setup-helm@v3
 
-      - name: "Login to ECR"
-        run: |
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ECR_REPO
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
         env:
           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
           AWS_SECRET_ACCESS_KEY: $AWS_SECRET
