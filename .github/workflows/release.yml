@@ -30,7 +30,6 @@ jobs:
       - name: "Set kubecontext"
         run: |
           aws eks --region us-east-1 update-kubeconfig --name otel-workshop-oct22
-          cat ~/.kube/config
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -42,3 +41,4 @@ jobs:
           command: run
           repository: ${{ secrets.AWS_ECR_REPO }}
           kube-context: 'arn:aws:eks:us-east-1:414852377253:cluster/otel-workshop-oct22'
+          kubeconfig: ~/.kube/config
