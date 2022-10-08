@@ -23,12 +23,7 @@ jobs:
           path: ~/.skaffold/
           key: fixed
 
-      - name: Install kustomize, kubectl and skaffold
-        uses: daisaru11/setup-cd-tools@v1
-        with:
-          kubectl: '1.19.2'
-          helm: '3.10.0'
-          skaffold: '1.14.0'
+      - uses: azure/setup-helm@v3
 
       - name: "Login to ECR"
         run: |
@@ -38,10 +33,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: $AWS_SECRET
           AWS_DEFAULT_REGION: $AWS_REGION
 
-      - name: Build and deploy to cluster
-        run: skaffold run --kube-context 'arn:aws:eks:$AWS_REGION:$AWS_ACCOUNT:cluster/$AWS_EKS_CLUSTER_NAME'
-        env:
-          SKAFFOLD_DEFAULT_REPO: $AWS_ECR_REPO
+      - name: Run Skaffold pipeline
+        uses: hiberbee/github-action-skaffold@1.19.0
+        with:
+          command: run
+          repository: $AWS_ECR_REPO
+          kube-context: 'arn:aws:eks:$AWS_REGION:$AWS_ACCOUNT:cluster/$AWS_EKS_CLUSTER_NAME'
           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
           AWS_SECRET_ACCESS_KEY: $AWS_SECRET
           AWS_DEFAULT_REGION: $AWS_REGION
