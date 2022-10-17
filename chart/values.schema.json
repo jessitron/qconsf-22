@@ -112,6 +112,9 @@
         "servicePort": {
           "type": "integer"
         },
+        "publicPort": {
+          "type": "integer"
+        },
         "env": {
           "type": "array",
           "items": {
@@ -129,6 +132,10 @@
         },
         "podAnnotations": {
           "type": "object"
+        },
+        "needsLoadBalancer": {
+          "description": "Determines whether to create an application load balancer",
+          "type": "boolean"
         }
       },
       "required": [

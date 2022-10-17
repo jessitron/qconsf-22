@@ -143,10 +143,12 @@ components:
     useDefault:
       env: true
     servicePort: 8080
+    publicPort: 80
     env:
       - name: FRONTEND_ADDR
         value: :8080
     podAnnotations: {}
+    needsLoadBalancer: true
     #  instrumentation.opentelemetry.io/inject-sdk: "true"
 
   loadgenerator:

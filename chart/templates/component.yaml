@@ -14,6 +14,9 @@
     {{- if $config.enabled -}}
         {{- include "otel.demo.deployment" $config -}}
         {{- include "otel.demo.service" $config -}}
+        {{- if $config.needsLoadBalancer }}
+            {{- include "otel.demo.loadbalancer" $config -}}
+        {{ end }}
     {{ end }}
 
 {{- end }}

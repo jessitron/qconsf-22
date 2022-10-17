@@ -64,3 +64,56 @@ spec:
     {{- include "otel-demo.selectorLabels" . | nindent 4 }}
 {{- end}}
 {{- end}}
+{{- define "otel.demo.loadbalancer" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "otel-demo.name" . }}-{{ .name }}
+  labels:
+    {{- include "otel-demo.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    {{- if .ports }}
+    {{- range $port := .ports }}
+    - port: {{ $port.value }}
+      name: {{ $port.name}}
+      targetPort: {{ $port.value }}
+    {{- end }}
+    {{- end }}
+
+    {{- if .servicePort }}
+    - port: {{.servicePort}}
+      name: service
+      targetPort: {{ .servicePort }}
+    {{- end }}
+  selector:
+    {{- include "otel-demo.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "otel-demo.name" . }}-{{ .name }}
+  labels:
+    {{- include "otel-demo.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+    {{- if .ports }}
+    {{- range $port := .ports }}
+    - port: {{ $port.value }}
+      name: {{ $port.name}}
+      targetPort: {{ $port.value }}
+    {{- end }}
+    {{- end }}
+
+    {{- if .servicePort }}
+    - port: {{.publicPort}}
+      name: service
+      targetPort: {{ .servicePort }}
+    {{- end }}
+  selector:
+    {{- include "otel-demo.selectorLabels" . | nindent 4 }}
+
+{{- end}}
