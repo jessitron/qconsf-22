@@ -1,18 +1,25 @@
-# ![otel-photo](./docs/img/opentelemetry-logo-nav.png) OpenTelemetry Demo
+# ![otel-photo](./docs/img/opentelemetry-logo-nav.png) Jess & Martin's OpenTelemetry Workshop
 
 This repository is forked from [Open-telemetry/opentelemetry-demo](https://github.com/open-telemetry/opentelemetry-demo) (in [October of 2022](https://github.com/open-telemetry/opentelemetry-demo/commit/b6e75ee44cc41bb8315e5e116cc1ac4807ef5e1d))
 by the Honeycomb DevRel team, in order to create a workshop.
 
-[![Slack](https://img.shields.io/badge/slack-@cncf/otel/demo-brightgreen.svg?logo=slack)](https://cloud-native.slack.com/archives/C03B4CWV4DA)
-[![Version](https://img.shields.io/github/v/release/open-telemetry/opentelemetry-demo?color=blueviolet)](https://github.com/open-telemetry/opentelemetry-demo/releases)
-[![Commits](https://img.shields.io/github/commits-since/open-telemetry/opentelemetry-demo/latest?color=ff69b4&include_prereleases)](https://github.com/open-telemetry/opentelemetry-demo/graphs/commit-activity)
-[![Downloads](https://img.shields.io/docker/pulls/otel/demo)](https://hub.docker.com/r/otel/demo)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?color=red)](https://github.com/open-telemetry/opentelemetry-demo/blob/main/LICENSE)
+## How to build
 
-## Under Construction
+Can the individual projects be built separately? surely.
 
-This repo is a work in progress. If you'd like to help, check out our
-[contributing guidance](#contributing).
+To build and run the whole thing,
+
+you need:
+
+- skaffold
+- helm
+- kubectl
+
+... and a k8s to deploy it to. (could be minikube)
+
+`skaffold run` (install skaffold)
+
+# stuff that is copied over
 
 ## Getting Started
 
