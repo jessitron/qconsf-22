@@ -94,7 +94,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "otel-demo.name" . }}-{{ .name }}
+  name: {{ include "otel-demo.name" . }}-{{ .name }}-external
   labels:
     {{- include "otel-demo.labels" . | nindent 4 }}
 spec:
