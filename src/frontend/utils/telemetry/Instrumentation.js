@@ -4,7 +4,7 @@ const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumenta
 const { NodeSDK, api } = require('@opentelemetry/sdk-node');
 
 // set log level to DEBUG for a lot of output
-api.diag.setLogger(new api.DiagConsoleLogger(), api.DiagLogLevel.DEBUG);
+api.diag.setLogger(new api.DiagConsoleLogger(), api.DiagLogLevel.INFO);
 
 api.propagation.setGlobalPropagator(
   new CompositePropagator({
