@@ -14,7 +14,7 @@ api.propagation.setGlobalPropagator(
 
 const sdk = new NodeSDK({
   traceExporter: new OTLPTraceExporter({
-    url: 'http://workshop-release-otelcol:4318',
+    url: 'http://workshop-release-otelcol:4318/v1/traces',
   }),
   instrumentations: getNodeAutoInstrumentations(),
 });
