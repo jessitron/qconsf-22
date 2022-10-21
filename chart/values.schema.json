@@ -30,12 +30,7 @@
       "type": "object"
     }
   },
-  "required": [
-    "components",
-    "image",
-    "observability",
-    "serviceAccount"
-  ],
+  "required": ["components", "image", "observability", "serviceAccount"],
   "definitions": {
     "Components": {
       "type": "object",
@@ -105,9 +100,7 @@
               "additionalProperties": false
             }
           },
-          "required": [
-            "env"
-          ]
+          "required": ["env"]
         },
         "servicePort": {
           "type": "integer"
@@ -138,10 +131,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "enabled",
-        "useDefault"
-      ],
+      "required": ["enabled", "useDefault"],
       "title": "Service"
     },
     "Env": {
@@ -173,9 +163,7 @@
           }
         }
       },
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "title": "Env"
     },
     "Default": {
@@ -208,9 +196,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "key"
-      ],
+      "required": ["key"],
       "title": "ConfigMapKeyRef"
     },
     "FieldRef": {
@@ -224,9 +210,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "fieldPath"
-      ],
+      "required": ["fieldPath"],
       "title": "FieldRef"
     },
     "ResourceFieldRef": {
@@ -243,9 +227,7 @@
           "type": "integer"
         }
       },
-      "required": [
-        "resource"
-      ],
+      "required": ["resource"],
       "title": "ResourceFieldRef"
     },
     "SecretKeyRef": {
@@ -262,9 +244,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "key"
-      ]
+      "required": ["key"]
     },
     "Port": {
       "type": "object",
@@ -277,10 +257,7 @@
           "type": "integer"
         }
       },
-      "required": [
-        "name",
-        "value"
-      ],
+      "required": ["name", "value"],
       "title": "Port"
     },
     "Image": {
@@ -295,9 +272,7 @@
           "items": {}
         }
       },
-      "required": [
-        "repository"
-      ],
+      "required": ["repository"],
       "title": "Image"
     },
     "Observability": {
@@ -314,10 +289,7 @@
           "$ref": "#/definitions/SendTelemetryProp"
         }
       },
-      "required": [
-        "jaeger",
-        "otelcol"
-      ],
+      "required": ["jaeger", "otelcol"],
       "title": "Observability"
     },
     "ObservabilityProp": {
@@ -328,9 +300,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "enabled"
-      ],
+      "required": ["enabled"],
       "title": "ObservabilityProp"
     },
     "SendTelemetryProp": {
@@ -343,14 +313,11 @@
         "location": {
           "type": "string"
         },
-        "location-http": {
+        "locationHttp": {
           "type": "string"
         }
       },
-      "required": [
-        "enabled",
-        "location"
-      ],
+      "required": ["enabled", "location"],
       "title": "SendTelemetryProp"
     }
   }
