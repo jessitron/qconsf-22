@@ -1,10 +1,10 @@
 const { CompositePropagator, W3CBaggagePropagator, W3CTraceContextPropagator } = require('@opentelemetry/core');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
 const { NodeSDK, api } = require('@opentelemetry/sdk-node');
 
 // set log level to DEBUG for a lot of output
-api.diag.setLogger(new api.DiagConsoleLogger(), api.DiagLogLevel.DEBUG);
+api.diag.setLogger(new api.DiagConsoleLogger(), api.DiagLogLevel.INFO);
 
 api.propagation.setGlobalPropagator(
   new CompositePropagator({
@@ -13,7 +13,9 @@ api.propagation.setGlobalPropagator(
 );
 
 const sdk = new NodeSDK({
-  traceExporter: new OTLPTraceExporter(),
+  traceExporter: new OTLPTraceExporter({
+    url: 'http://workshop-release-otelcol:4318/v1/traces',
+  }),
   instrumentations: getNodeAutoInstrumentations(),
 });
 
