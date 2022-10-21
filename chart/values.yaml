@@ -5,8 +5,8 @@ observability:
     enabled: true
   sendTelemetry:
     enabled: false
-    location: '{{- include "otel-demo.name" . }}-jaeger:4317'
-    location-http: '{{- include "otel-demo.name" . }}-jaeger:4318'
+    location: 'jaeger:4317'
+    location-http: 'jaeger:4318'
 
 
 default:

@@ -84,18 +84,18 @@ Exclude email service and treat differently because the addr. for the email serv
 {{- if .observability.sendTelemetry.enabled }}
 {{- if eq .name "quote-service" }}
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
-  value: {{ include "observability.sendTelemetry.location" . }}
+  value: {{ include "otel-demo.name" . }}-{{ include "observability.sendTelemetry.location" . }}
 {{- else }}
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
-  value: http://{{ include "observability.sendTelemetry.location" . }}
+  value: http://{{ include "otel-demo.name" . }}-{{ include "observability.sendTelemetry.location" . }}
 {{- end }}
 {{- if eq .name "shipping-service" }}
 - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-  value: http://{{ include "observability.sendTelemetry.location" . }}
+  value: http://{{ include "otel-demo.name" . }}-{{ include "observability.sendTelemetry.location" . }}
 {{- end }}
 {{- if eq .name "email-service" }}
 - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-  value: http://{{ include "observability.sendTelemetry.location-http" . }}/v1/traces
+  value: http://{{ include "otel-demo.name" . }}-{{ include "observability.sendTelemetry.location-http" . }}/v1/traces
 {{- end }}
 {{- end }}
 
