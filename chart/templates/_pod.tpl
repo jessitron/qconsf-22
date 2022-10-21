@@ -87,7 +87,7 @@ Exclude email service and treat differently because the addr. for the email serv
   value: {{ include "otel-demo.name" . }}-{{ .observability.sendTelemetry.location }}
 {{- else }}
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
-  value: http://{{ include "otel-demo.name" . }}-{{ .observability.sendTelemetry.locationHttp }}
+  value: http://{{ include "otel-demo.name" . }}-{{ .observability.sendTelemetry.location }}
 {{- end }}
 {{- if eq .name "shipping-service" }}
 - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
