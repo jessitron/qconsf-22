@@ -37,3 +37,4 @@ composer.lock
 .venv
 
 aws
+chart/charts
