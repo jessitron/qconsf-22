@@ -309,6 +309,9 @@
         },
         "jaeger": {
           "$ref": "#/definitions/ObservabilityProp"
+        },
+        "sendTelemetry": {
+          "$ref": "#/definitions/SendTelemetryProp"
         }
       },
       "required": [
@@ -329,6 +332,26 @@
         "enabled"
       ],
       "title": "ObservabilityProp"
+    },
+    "SendTelemetryProp": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "location": {
+          "type": "string"
+        },
+        "location-http": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "location"
+      ],
+      "title": "SendTelemetryProp"
     }
   }
 }

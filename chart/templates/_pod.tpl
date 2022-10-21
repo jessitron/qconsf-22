@@ -81,21 +81,21 @@ Exclude email service and treat differently because the addr. for the email serv
 {{ toYaml .env }}
 {{- end }}
 
-{{- if .observability.otelcol.enabled }}
+{{- if .observability.sendTelemetry.enabled }}
 {{- if eq .name "quote-service" }}
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
-  value: {{ include "otel-demo.name" . }}-otelcol:4317
+  value: {{ include "observability.sendTelemetry.location" . }}
 {{- else }}
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
-  value: http://{{ include "otel-demo.name" . }}-otelcol:4317
+  value: http://{{ include "observability.sendTelemetry.location" . }}
 {{- end }}
 {{- if eq .name "shipping-service" }}
 - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-  value: http://{{ include "otel-demo.name" . }}-otelcol:4317
+  value: http://{{ include "observability.sendTelemetry.location" . }}
 {{- end }}
 {{- if eq .name "email-service" }}
 - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-  value: http://{{ include "otel-demo.name" . }}-otelcol:4318/v1/traces
+  value: http://{{ include "observability.sendTelemetry.location-http" . }}/v1/traces
 {{- end }}
 {{- end }}
 

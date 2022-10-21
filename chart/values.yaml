@@ -2,7 +2,12 @@ observability:
   otelcol:
     enabled: true
   jaeger:
+    enabled: true
+  sendTelemetry:
     enabled: false
+    location: '{{- include "otel-demo.name" . }}-jaeger:4317'
+    location-http: '{{- include "otel-demo.name" . }}-jaeger:4318'
+
 
 default:
   env:
@@ -147,6 +152,8 @@ components:
     env:
       - name: FRONTEND_ADDR
         value: :8080
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: 'http://{{ include "otel-demo.name" . }}-jaeger:4317'
     podAnnotations: {}
     needsLoadBalancer: true
     #  instrumentation.opentelemetry.io/inject-sdk: "true"
