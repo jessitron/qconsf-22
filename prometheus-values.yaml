@@ -12,3 +12,7 @@ serverFiles:
         static_configs:
           - targets:
               - workshop-release-otelcol.default.svc.cluster.local:9464
+      - job_name: prometheus
+        static_configs:
+          - targets:
+              - localhost:9090
