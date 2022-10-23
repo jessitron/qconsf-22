@@ -36,7 +36,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Run Skaffold pipeline
-        uses: hiberbee/github-action-skaffold@1.19.0
+        uses: hiberbee/github-action-skaffold@1.23.0
         with:
           command: run
           repository: ${{ secrets.AWS_ECR_REPO }}
