@@ -51,8 +51,7 @@ frontend client by going to <http://localhost:8080/>.
 Currently, the easiest way to run the frontend for local development is to execute
 
 ```shell
-  docker compose run --service-ports -e NODE_ENV=development
-  --volume $(pwd)/src/frontend:/app --volume $(pwd)/pb:/app/pb frontend sh
+docker compose run --service-ports -e NODE_ENV=development --volume $(pwd)/src/frontend:/app --volume $(pwd)/pb:/app/pb --user node --entrypoint sh frontend
 ```
 
 from the root folder.
@@ -60,3 +59,8 @@ from the root folder.
 It will start all of the required backend services
 and within the container simply run `npm run dev`.
 After that the app should be available at <http://localhost:8080/>.
+
+## Collector Config
+
+The app looks for a cookie named 'otelCollectorUrl' and gets its value on page
+load. This cookie key + value needs to be set by a reverse proxy.

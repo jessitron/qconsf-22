@@ -29,9 +29,8 @@ WORKDIR /usr/src/app/
 ENV NODE_ENV production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules/ ./node_modules/
-
 COPY ./src/paymentservice/ ./
-COPY ./pb/demo.proto ./demo.proto
+COPY ./pb/demo.proto ./
 
 EXPOSE ${PAYMENT_SERVICE_PORT}
 ENTRYPOINT [ "node", "--require", "./tracing.js", "./index.js" ]
