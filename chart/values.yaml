@@ -247,6 +247,11 @@ opentelemetry-collector:
       protocol: TCP
   config:
     exporters:
+      otlp/honeycomb:
+        endpoint: api.honeycomb.io:443
+        headers:
+          "x-honeycomb-team": "iOVp4eWh1ZEM5OHabXeHSK"
+          "x-honeycomb-dataset": "metrics"
       jaeger:
         endpoint: "{{ .Release.Name }}-jaeger:14250"
         tls:
@@ -259,7 +264,8 @@ opentelemetry-collector:
           exporters:
             - logging
             - jaeger
+            - otlp/honeycomb
         metrics:
           receivers: [otlp]
           processors: [batch]
-          exporters: [prometheus, logging]
+          exporters: [prometheus, logging, otlp/honeycomb]
