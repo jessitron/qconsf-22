@@ -1,0 +1,14 @@
+server:
+  persistentVolume:
+    enabled: false
+
+alertmanager:
+  enabled: false
+
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+      - job_name: otelcol
+        static_configs:
+          - targets:
+              - workshop-release-otelcol.default.svc.cluster.local:9464
