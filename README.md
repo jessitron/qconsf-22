@@ -7,12 +7,14 @@ by the Honeycomb DevRel team, in order to create a workshop.
 
 ## How to build
 
-Can the individual projects be built separately? surely.
+Can the individual projects be built separately? surely. Check each one's Dockerfile for how.
 
 To build and run the whole thing,
 
 you need:
 
+- [Docker](./docs/docker_deployment.md)
+- [Kubernetes](./docs/kubernetes_deployment.md)
 - skaffold
 - helm
 - kubectl
@@ -24,9 +26,6 @@ you need:
 # stuff that is copied over
 
 ## Getting Started
-
-- [Docker](./docs/docker_deployment.md)
-- [Kubernetes](./docs/kubernetes_deployment.md)
 
 ## Documentation
 
@@ -134,15 +133,12 @@ Find the **Protocol Buffer Definitions** in the `/pb/` directory.
 
 - **[Kubernetes](https://kubernetes.io)**: the app is designed to run on
   Kubernetes (both locally , as well as on the cloud).
-- **[Docker](https://docs.docker.com)**: this forked sample can also be executed
-  only with Docker.
 - **[gRPC](https://grpc.io)**: microservices use a high volume of gRPC calls to
   communicate to each other.
 - **[OpenTelemetry Traces](https://opentelemetry.io)**: all services are
   instrumented using OpenTelemetry available instrumentation libraries.
-- **[OpenTelemetry
-  Collector](https://opentelemetry.io/docs/collector/getting-started)**: all
-  services are instrumented and sending the generated traces to the
+- **[OpenTelemetry Collector](https://opentelemetry.io/docs/collector/getting-started)**:
+  all services are instrumented and sending the generated traces to the
   OpenTelemetry Collector via gRPC. The received traces are then exported to the
   logs and to Jaeger.
 - **[Jaeger](https://www.jaegertracing.io)**: all generated traces are being
@@ -164,34 +160,6 @@ Find the **Protocol Buffer Definitions** in the `/pb/` directory.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-We meet weekly Monday's at 8:15 AM PT. The meeting is subject to change
-depending on contributors' availability. Check the [OpenTelemetry community
-calendar](https://calendar.google.com/calendar/embed?src=google.com_b79e3e90j7bbsa2n2p5an5lf60%40group.calendar.google.com)
-for specific dates and Zoom meeting links.
-
-Meeting notes are available as a public [Google
-doc](https://docs.google.com/document/d/16f-JOjKzLgWxULRxY8TmpM_FjlI1sthvKurnqFz9x98/edit).
-For edit access, get in touch on
-[Slack](https://cloud-native.slack.com/archives/C03B4CWV4DA).
-
-[Maintainers](https://github.com/open-telemetry/community/blob/main/community-membership.md#maintainer)
-([@open-telemetry/demo-maintainers](https://github.com/orgs/open-telemetry/teams/demo-maintainers)):
-
-- [Austin Parker](https://github.com/austinlparker), Lightstep
-- [Carter Socha](https://github.com/cartersocha), Microsoft
-- [Morgan McLean](https://github.com/mtwo), Splunk
-- [Pierre Tessier](https://github.com/puckpuck), Honeycomb
-
-[Approvers](https://github.com/open-telemetry/community/blob/main/community-membership.md#approver)
-([@open-telemetry/demo-approvers](https://github.com/orgs/open-telemetry/teams/demo-approvers)):
-
-- [Juliano Costa](https://github.com/julianocosta89), Dynatrace
-- [Michael Maxwell](https://github.com/mic-max), Microsoft
-- [Mikko Viitanen](https://github.com/mviitane), Dynatrace
-- [Penghan Wang](https://github.com/wph95), AppDynamics
-- [Reiley Yang](https://github.com/reyang), Microsoft
-- [Ziqi Zhao](https://github.com/fatsheep9146), Alibaba
 
 ### Thanks to all the people who have contributed
 

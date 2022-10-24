@@ -1,10 +1,5 @@
-Fixes #.
+Hi, thanks for the PR!
 
-## Changes
+if you're in the workshop, feel free to get someone else on your team to click approve...
 
-Please provide a brief description of the changes here.
-
-For significant contributions please make sure you have completed the following items:
-
-* [ ] Appropriate `CHANGELOG.md` updated for non-trivial changes
-* [ ] Design discussion issue #
+or merge it yourself. It's a workshop. It's OK to break things.
