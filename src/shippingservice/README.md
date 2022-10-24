@@ -3,6 +3,8 @@
 The Shipping service provides price quote, tracking IDs, and the impression of
 order fulfillment & shipping processes.
 
+It is in Rust!
+
 ## Local
 
 This repo assumes you have rust 1.61 installed. You may use docker, or install

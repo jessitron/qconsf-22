@@ -10,6 +10,8 @@ rendering it as a log message. It expects a JSON payload like:
 }
 ```
 
+Hooray, Ruby! ... but not Rails. This one uses sinatra.
+
 ## Building locally
 
 We use `bundler` to manage dependencies. To get started, simply `bundle install`.

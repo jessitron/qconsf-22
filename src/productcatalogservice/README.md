@@ -1,4 +1,8 @@
-# Read Me
+# Produce Catalog Service
+
+a little go service. This one looks fun to modify
+
+## supposedly
 
 When this service is run the output should be similar to the following
 

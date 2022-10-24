@@ -3,6 +3,11 @@
 The Ad service provides advertisement based on context keys. If no context keys
 are provided then it returns random ads.
 
+This is straight Java with a gRPC server.
+
+Notice that it uses the javaagent (in the CMD in the Dockerfile).
+Then in the code it uses the OpenTelemetry API to pull tracerProviders and spans out of the air.
+
 ## Building locally
 
 The Ad service uses gradlew to compile/install/distribute. Gradle wrapper is
