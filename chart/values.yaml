@@ -245,12 +245,18 @@ opentelemetry-collector:
       servicePort: 9464
       hostPort: 9464
       protocol: TCP
+  extraEnvs:
+    - name: HONEYCOMB_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: honeycomb-api-key-for-collector
+          key: api-key
   config:
     exporters:
       otlp/honeycomb:
         endpoint: api.honeycomb.io:443
         headers:
-          "x-honeycomb-team": "iOVp4eWh1ZEM5OHabXeHSK"
+          "x-honeycomb-team": "${HONEYCOMB_API_KEY}"
           "x-honeycomb-dataset": "metrics"
       jaeger:
         endpoint: "{{ .Release.Name }}-jaeger:14250"
