@@ -159,7 +159,7 @@ Find the **Protocol Buffer Definitions** in the `/pb/` directory.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+This is a temporary project, derived from [Open Telemetry Demo](https://github.com/open-telemetry/opentelemetry-demo). Contribute there!
 
 ### Thanks to all the people who have contributed
 
