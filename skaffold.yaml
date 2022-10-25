@@ -29,9 +29,6 @@ build:
     - image: frontend
       docker:
         dockerfile: src/frontend/Dockerfile
-    - image: frontendproxy
-      docker:
-        dockerfile: src/frontendproxy/Dockerfile
     - image: loadgenerator
       docker:
         dockerfile: src/loadgenerator/Dockerfile
@@ -72,6 +69,6 @@ deploy:
           components.adService.image: adservice
           components.emailService.image: emailservice
           components.frontend.image: frontend
-          components.frontendproxy.image: frontendproxy
+
         useHelmSecrets: false
         wait: false
