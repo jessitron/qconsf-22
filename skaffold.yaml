@@ -52,6 +52,7 @@ build:
   local:
     useBuildkit: false
     concurrency: 1
+    tryImportMissing: true
 deploy:
   helm:
     releases:

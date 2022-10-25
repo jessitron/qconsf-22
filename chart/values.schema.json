@@ -63,6 +63,9 @@
         "frontend": {
           "$ref": "#/definitions/Service"
         },
+        "frontendproxy": {
+          "$ref": "#/definitions/Service"
+        },
         "loadgenerator": {
           "$ref": "#/definitions/Service"
         },
