@@ -27,16 +27,6 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	otelcodes "go.opentelemetry.io/otel/codes"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
-	"go.opentelemetry.io/otel/propagation"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	"go.opentelemetry.io/otel/trace"
-
 	"google.golang.org/protobuf/encoding/protojson"
 
 	"google.golang.org/grpc"
@@ -55,26 +45,8 @@ func init() {
 	catalog = readCatalogFile()
 }
 
-func initTracerProvider() *sdktrace.TracerProvider {
-	ctx := context.Background()
-
-	exporter, err := otlptracegrpc.New(ctx)
-	if err != nil {
-		log.Fatalf("OTLP Trace gRPC Creation: %v", err)
-	}
-	tp := sdktrace.NewTracerProvider(sdktrace.WithBatcher(exporter))
-	otel.SetTracerProvider(tp)
-	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
-	return tp
-}
 
 func main() {
-	tp := initTracerProvider()
-	defer func() {
-		if err := tp.Shutdown(context.Background()); err != nil {
-			log.Fatalf("Tracer Provider Shutdown: %v", err)
-		}
-	}()
 
 	svc := &productCatalog{}
 	var port string
@@ -89,8 +61,8 @@ func main() {
 	}
 
 	srv := grpc.NewServer(
-		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
-		grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()),
+		grpc.UnaryInterceptor(),
+		grpc.StreamInterceptor(),
 	)
 
 	pb.RegisterProductCatalogServiceServer(srv, svc)
@@ -134,25 +106,13 @@ func (p *productCatalog) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Hea
 }
 
 func (p *productCatalog) ListProducts(ctx context.Context, req *pb.Empty) (*pb.ListProductsResponse, error) {
-	span := trace.SpanFromContext(ctx)
-
-	span.SetAttributes(
-		attribute.Int("app.products.count", len(catalog)),
-	)
 	return &pb.ListProductsResponse{Products: catalog}, nil
 }
 
 func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductRequest) (*pb.Product, error) {
-	span := trace.SpanFromContext(ctx)
-	span.SetAttributes(
-		attribute.String("app.product.id", req.Id),
-	)
-
 	// GetProduct will fail on a specific product when feature flag is enabled
 	if p.checkProductFailure(ctx, req.Id) {
 		msg := fmt.Sprintf("Error: ProductCatalogService Fail Feature Flag Enabled")
-		span.SetStatus(otelcodes.Error, msg)
-		span.AddEvent(msg)
 		return nil, status.Errorf(codes.Internal, msg)
 	}
 
@@ -166,21 +126,13 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
 
 	if found == nil {
 		msg := fmt.Sprintf("Product Not Found: %s", req.Id)
-		span.SetStatus(otelcodes.Error, msg)
-		span.AddEvent(msg)
 		return nil, status.Errorf(codes.NotFound, msg)
 	}
 
-	msg := fmt.Sprintf("Product Found - ID: %s, Name: %s", req.Id, found.Name)
-	span.AddEvent(msg)
-	span.SetAttributes(
-		attribute.String("app.product.name", found.Name),
-	)
 	return found, nil
 }
 
 func (p *productCatalog) SearchProducts(ctx context.Context, req *pb.SearchProductsRequest) (*pb.SearchProductsResponse, error) {
-	span := trace.SpanFromContext(ctx)
 
 	var result []*pb.Product
 	for _, product := range catalog {
@@ -189,9 +141,6 @@ func (p *productCatalog) SearchProducts(ctx context.Context, req *pb.SearchProdu
 			result = append(result, product)
 		}
 	}
-	span.SetAttributes(
-		attribute.Int("app.products_search.count", len(result)),
-	)
 	return &pb.SearchProductsResponse{Results: result}, nil
 }
 
@@ -202,8 +151,6 @@ func (p *productCatalog) checkProductFailure(ctx context.Context, id string) boo
 
 	conn, err := createClient(ctx, p.featureFlagSvcAddr)
 	if err != nil {
-		span := trace.SpanFromContext(ctx)
-		span.AddEvent("error", trace.WithAttributes(attribute.String("message", "Feature Flag Connection Failed")))
 		return false
 	}
 	defer conn.Close()
@@ -213,8 +160,6 @@ func (p *productCatalog) checkProductFailure(ctx context.Context, id string) boo
 		Name: flagName,
 	})
 	if err != nil {
-		span := trace.SpanFromContext(ctx)
-		span.AddEvent("error", trace.WithAttributes(attribute.String("message", fmt.Sprintf("GetFlag Failed: %s", flagName))))
 		return false
 	}
 
@@ -224,7 +169,5 @@ func (p *productCatalog) checkProductFailure(ctx context.Context, id string) boo
 func createClient(ctx context.Context, svcAddr string) (*grpc.ClientConn, error) {
 	return grpc.DialContext(ctx, svcAddr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
-		grpc.WithStreamInterceptor(otelgrpc.StreamClientInterceptor()),
 	)
 }
