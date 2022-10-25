@@ -48,7 +48,7 @@ build:
       docker:
         dockerfile: src/shippingservice/Dockerfile
   tagPolicy:
-    gitCommit: {}
+    inputDigest: {}
   local:
     useBuildkit: false
     concurrency: 1
