@@ -164,7 +164,8 @@ components:
     publicPort: 80
     # something about port 10000 too?
     env:
-      # - PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - name: PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        value: "{{ .Release.Name }}-otelcol:4318"
       - name: FRONTEND_PORT
         value: "80"
       - name: FRONTEND_HOST
@@ -173,12 +174,14 @@ components:
         value: "8081"
       - name: FEATURE_FLAG_SERVICE_HOST
         value: "{{ .Release.Name }}-featureflagService"
-      # - LOCUST_WEB_HOST
-      # - LOCUST_WEB_PORT
-      # - name: GRAFANA_SERVICE_PORT
-      #   value:
-      # - name: GRAFANA_SERVICE_HOST
-      #   value:
+      - name: LOCUST_WEB_HOST
+        value: "{{ .Release.Name }}-loadgenerator"
+      - name: LOCUST_WEB_PORT
+        value: "8080"
+      - name: GRAFANA_SERVICE_PORT
+        value: "8080"
+      - name: GRAFANA_SERVICE_HOST
+        value: "{{ .Release.Name }}-grafana"
       - name: JAEGER_SERVICE_PORT
         value: "16686"
       - name: JAEGER_SERVICE_HOST
