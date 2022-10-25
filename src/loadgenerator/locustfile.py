@@ -47,7 +47,7 @@ products = [
 
 people = [
     {
-        "email": "amy@example.com",
+        "email": "larry_sergei@example.com",
         "address": {
             "streetAddress": "1600 Amphitheatre Parkway",
             "zipCode": 94043,
@@ -64,7 +64,7 @@ people = [
         },
     },
     {
-        "email": "lauren@example.com",
+        "email": "bill@example.com",
         "address": {
             "streetAddress": "One Microsoft Way",
             "zipCode": 98052,
@@ -81,7 +81,7 @@ people = [
         },
     },
     {
-        "email": "alex@example.com",
+        "email": "steve@example.com",
         "address": {
             "streetAddress": "One Apple Park Way",
             "zipCode": 95014,
@@ -98,7 +98,7 @@ people = [
         },
     },
     {
-        "email": "nguyen@example.com",
+        "email": "mark@example.com",
         "address": {
             "streetAddress": "1 Hacker Way",
             "zipCode": 94025,
@@ -115,7 +115,7 @@ people = [
         },
     },
     {
-        "email": "beatrice@example.com",
+        "email": "jeff@example.com",
         "address": {
             "streetAddress": "410 Terry Ave N",
             "zipCode": 98109,
@@ -132,7 +132,7 @@ people = [
         },
     },
     {
-        "email": "srinivas@example.com",
+        "email": "reed@example.com",
         "address": {
             "streetAddress": "100 Winchester Circle",
             "zipCode": 95032,
@@ -149,7 +149,7 @@ people = [
         },
     },
     {
-        "email": "maciej@example.com",
+        "email": "tobias@example.com",
         "address": {
             "streetAddress": "150 Elgin St",
             "zipCode": 214,
@@ -166,7 +166,7 @@ people = [
         },
     },
     {
-        "email": "xiaoping@example.com",
+        "email": "jack@example.com",
         "address": {
             "streetAddress": "1355 Market St",
             "zipCode": 94103,
@@ -183,7 +183,7 @@ people = [
         },
     },
     {
-        "email": "sasha@example.com",
+        "email": "moore@example.com",
         "address": {
             "streetAddress": "2200 Mission College Blvd",
             "zipCode": 95054,

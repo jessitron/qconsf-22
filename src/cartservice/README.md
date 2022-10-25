@@ -1,5 +1,17 @@
 # Cart Service
 
-This one is .NET
+This service stores user shopping carts in Redis.
 
-The .NET support for OTel is pretty good. Martin could write more about it.
+## Local Build
+
+Run `dotnet restore` and `dotnet build`.
+
+Protobufs must be present in `./src/protos`
+
+## Docker Build
+
+From the root directory, run:
+
+```sh
+docker compose build cartservice
+```
