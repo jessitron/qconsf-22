@@ -72,5 +72,6 @@ deploy:
           components.adService.image: adservice
           components.emailService.image: emailservice
           components.frontend.image: frontend
+          components.frontendproxy.image: frontendproxy
         useHelmSecrets: false
         wait: false
