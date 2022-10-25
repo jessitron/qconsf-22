@@ -155,6 +155,40 @@ components:
     needsLoadBalancer: true
     #  instrumentation.opentelemetry.io/inject-sdk: "true"
 
+  frontendproxy:
+    enabled: true
+    useDefault:
+      env: true
+    podAnnotations: {}
+    servicePort: 8080
+    publicPort: 80
+    # something about port 10000 too?
+    environment:
+      # - PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - name: FRONTEND_PORT
+        value: 80
+      - name: FRONTEND_HOST
+        value: "{{ .Release.Name }}-frontend"
+      - name: FEATURE_FLAG_SERVICE_PORT
+        value:
+      - name: FEATURE_FLAG_SERVICE_HOST
+        value:
+      # - LOCUST_WEB_HOST
+      # - LOCUST_WEB_PORT
+      # - name: GRAFANA_SERVICE_PORT
+      #   value:
+      # - name: GRAFANA_SERVICE_HOST
+      #   value:
+      - name: JAEGER_SERVICE_PORT
+        value: 16686
+      - name: JAEGER_SERVICE_HOST
+        value: "{{ .Release.Name }}-jaeger"
+      - name: ENVOY_PORT
+        value: 8080
+      - name: ENVOY_UID
+        value: 0
+    # needsLoadBalancer: true
+
   loadgenerator:
     enabled: true
     useDefault:

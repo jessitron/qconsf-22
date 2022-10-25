@@ -29,6 +29,9 @@ build:
     - image: frontend
       docker:
         dockerfile: src/frontend/Dockerfile
+    - image: frontendproxy
+      docker:
+        dockerfile: src/frontendproxy/Dockerfile
     - image: loadgenerator
       docker:
         dockerfile: src/loadgenerator/Dockerfile
@@ -48,6 +51,7 @@ build:
     gitCommit: {}
   local:
     useBuildkit: false
+    concurrency: 1
 deploy:
   helm:
     releases:
