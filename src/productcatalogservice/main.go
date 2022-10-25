@@ -60,10 +60,7 @@ func main() {
 		log.Fatalf("TCP Listen: %v", err)
 	}
 
-	srv := grpc.NewServer(
-		grpc.UnaryInterceptor(),
-		grpc.StreamInterceptor(),
-	)
+	srv := grpc.NewServer()
 
 	pb.RegisterProductCatalogServiceServer(srv, svc)
 	healthpb.RegisterHealthServer(srv, svc)
