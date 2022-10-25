@@ -3,7 +3,7 @@
 This repository is forked from [Open-telemetry/opentelemetry-demo](https://github.com/open-telemetry/opentelemetry-demo) (in [October of 2022](https://github.com/open-telemetry/opentelemetry-demo/commit/b6e75ee44cc41bb8315e5e116cc1ac4807ef5e1d))
 by the Honeycomb DevRel team, in order to create a workshop.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jessitron/qconsf22)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jessitron/qconsf-22)
 
 ## How to build
 
