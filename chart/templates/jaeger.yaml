@@ -59,4 +59,20 @@ spec:
       targetPort: 14250
   selector:
       {{- include "otel-demo.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "otel-demo.name" . }}-{{ .name }}-external
+  labels:
+    {{- include "otel-demo.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: service
+      targetPort: 16686
+  selector:
+    {{- include "otel-demo.selectorLabels" . | nindent 4 }}
+
 {{- end }}
