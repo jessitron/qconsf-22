@@ -17,6 +17,7 @@ const {context, propagation, trace} = require('@opentelemetry/api');
 const cardValidator = require('simple-card-validator');
 const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
+const fraud = require('./fraud');
 
 // Setup
 const logger = pino();
@@ -25,6 +26,11 @@ const tracer = trace.getTracer('paymentservice');
 // Functions
 module.exports.charge = request => {
   const span = tracer.startSpan('charge');
+
+  const fraudResult = fraud.fraudCheck(request);
+  if (fraudResult?.sus == true) {
+    throw new Error("This looks like fraud to us");
+  }
 
   const { creditCardNumber: number,
     creditCardExpirationYear: year,
