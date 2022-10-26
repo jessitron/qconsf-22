@@ -24,6 +24,11 @@ function doTheThing() {
 
   echo "let's deploy..."
   skaffold run
+  returned=$?
+
+  if [[ $returned -ne 0 ]]; then
+    cowsay "OH NO"
+  fi
 }
 
 while :
