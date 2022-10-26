@@ -23,8 +23,8 @@ COPY ./src/productcatalogservice/ ./
 COPY ./pb/ ./proto/
 
 RUN go mod download
-RUN go get google.golang.org/protobuf/cmd/protoc-gen-go
-RUN go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
+RUN go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
+RUN go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 # Build executable
 RUN protoc -I ./proto/ ./proto/demo.proto --go_out=./ --go-grpc_out=./

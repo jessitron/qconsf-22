@@ -25,11 +25,11 @@ export PATH=$PATH:$(pwd)
 and then install the golang protobuf compiler thing:
 
 ```sh
-go install google.golang.org/protobuf/cmd/protoc-gen-go
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
-Don't commit the changes this makes to go.mod and go.sum. (What's the go equivalent of 'npm install -g'?)
+Don't commit the changes this makes to go.mod and go.sum. 
 
 To build the protos and the service binary, run:
 
