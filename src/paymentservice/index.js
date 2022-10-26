@@ -23,7 +23,7 @@ const pino = require('pino')
 const charge = require('./charge')
 
 // Functions
-function chargeServiceHandler(call, callback) {
+async function chargeServiceHandler(call, callback) {
   const span = opentelemetry.trace.getActiveSpan();
 
   try {
@@ -33,7 +33,7 @@ function chargeServiceHandler(call, callback) {
     })
     logger.info(`PaymentService#Charge invoked by: ${JSON.stringify(call.request)}`)
 
-    const response = charge.charge(call.request)
+    const response = await charge.charge(call.request)
     callback(null, response)
 
   } catch (err) {

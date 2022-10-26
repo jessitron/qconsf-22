@@ -24,7 +24,7 @@ const logger = pino();
 const tracer = trace.getTracer('paymentservice');
 
 // Functions
-module.exports.charge = request => {
+module.exports.charge = async request => {
   const span = tracer.startSpan('charge');
 
   const fraudResult = fraud.fraudCheck(request);
