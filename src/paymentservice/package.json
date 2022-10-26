@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "semistandard *.js"
+    "lint": "semistandard *.js",
+    "start": "PAYMENT_SERVICE_PORT=8080 node -r ./tracing.js index.js"
   },
   "author": "Jonathan Lui",
   "license": "ISC",
