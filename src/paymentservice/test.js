@@ -24,10 +24,10 @@ function runGetFeature() {
         nanos: 0
     },
     creditCard: {    
-        credit_card_number: "4141414141414141",
-        credit_card_cvv: 333,
-        credit_card_expiration_year: 2020,
-        credit_card_expiration_month: 3
+        creditCardNumber: "4111111111111111",
+        creditCardCvv: 333,
+        creditCardExpirationYear: 2027,
+        creditCardExpirationMonth: 3
     }
   }
   client.Charge(chargeRequest, chargeCallback);
