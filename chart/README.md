@@ -1,22 +1,14 @@
-# OpenTelemetry Demo Helm Chart
+# Very Exciting Helm Chart
 
-The helm chart installs [OpenTelemetry Demo](https://github.com/open-telemetry/opentelemetry-demo)
-in kubernetes cluster.
+The helm chart installs this version of [OpenTelemetry Demo](https://github.com/open-telemetry/opentelemetry-demo)
+in a kubernetes cluster.
 
 ## Prerequisites
 
 - Helm 3.0+
 
-## Installing the Chart
-
-Add OpenTelemetry Helm repository:
+from the root of this repo, to install (or update) a realease with the name "workshop-release"
 
 ```console
-helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
-```
-
-To install the chart with the release name my-otel-demo, run the following command:
-
-```console
-helm install my-otel-demo open-telemetry/opentelemetry-demo
+helm upgrade -i workshop-release chart
 ```
