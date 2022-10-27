@@ -53,7 +53,7 @@ build:
 deploy:
   helm:
     releases:
-      - name: workshop-release
+      - name: qcon-workshop
         chartPath: chart
         recreatePods: false
         skipBuildDependencies: false

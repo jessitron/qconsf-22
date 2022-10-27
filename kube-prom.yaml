@@ -1,0 +1,40 @@
+grafana:
+  plugins:
+    - grafana-piechart-panel
+  sidecar:
+    dashboards:
+      searchNamespace: ALL
+    datasources:
+      searchNamespace: ALL
+kubeControllerManager:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeScheduler:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    additionalScrapeConfigs:
+      - job_name: otelcol
+        static_configs:
+          - targets:
+              - workshop-release-otelcol.default.svc.cluster.local:9464
+      - job_name: prometheus
+        static_configs:
+          - targets:
+              - localhost:9090
+
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+  manageCrds: false
+  tls:
+    enabled: false
+  tlsProxy:
+    enabled: false
+thanosObjectStorageConfig: null
