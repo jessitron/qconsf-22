@@ -29,7 +29,7 @@ module.exports.charge = async request => {
 
   const fraudResult = await fraud.fraudCheck(request);
   span.setAttribute("app.fraud.result", JSON.stringify(fraudResult))
-  if (fraudResult?.sus == true) {
+  if (fraudResult.sus == true) {
     throw new Error("This looks like fraud to us!");
   }
 
