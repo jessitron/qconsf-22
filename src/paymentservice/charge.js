@@ -30,7 +30,7 @@ module.exports.charge = async request => {
   const fraudResult = fraud.fraudCheck(request);
   span.setAttribute("app.fraud.result", JSON.stringify(fraudResult))
   if (fraudResult?.sus == true) {
-    throw new Error("This looks like fraud to us");
+    throw new Error("This looks like fraud to us!");
   }
 
   const { creditCardNumber: number,
