@@ -26,6 +26,7 @@ module.exports.fraudCheck = async request => {
     } catch (err) {
         logger.error(err);
         logger.warn("Unable to check fraud, dependency unavailable");
+        span?.recordException(err);
         return NoResult;
     }
 
