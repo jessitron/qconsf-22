@@ -9,9 +9,10 @@ const NoResult = {message: "no info"};
 module.exports.fraudCheck = async request => {
     console.log("Fraud check time: " + request)
     const span = otel.trace.getActiveSpan();
+    logger.info("Did I find a span? " + span);
 
     try {
-        const result = await axios.get("http://try-this-whataservice:8080");
+        const result = await axios.get("http://qcon-java-team-whataservice:8080");
         if (result.status !== 200 ) {
             logger.warn("Got status: " + result.status);
             span?.setAttribute("app.fraudstatus", result.status)
