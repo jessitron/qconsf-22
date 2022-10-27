@@ -7,12 +7,12 @@ const logger = pino();
 const NoResult = {message: "no info"};
 
 module.exports.fraudCheck = async request => {
-    console.log("Fraud check time: " + request)
+    console.log("what does the request have? " + JSON.stringify(request));
     const span = otel.trace.getActiveSpan();
     logger.info("Did I find a span? " + span?.spanContext().spanId);
 
     try {
-        const result = await axios.get("http://qcon-java-team-whataservice:8080");
+        const result = await axios.post("http://qcon-java-team-whataservice:8080/", request);
         span?.setAttribute("app.fraud.httpstatus", result.status)
         if (result.status !== 200 ) {
             logger.warn("Got status: " + result.status);
