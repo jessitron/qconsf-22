@@ -11,8 +11,9 @@ module.exports.fraudCheck = async request => {
     const span = otel.trace.getActiveSpan();
     logger.info("Did I find a span? " + span?.spanContext().spanId);
 
+    const url = process.env.FRAUD_CHECK_URL || "http://qcon-java-team-whataservice:8080/";
     try {
-        const result = await axios.post("http://qcon-java-team-whataservice:8080/", request);
+        const result = await axios.post(url, request);
         span?.setAttribute("app.fraud.httpstatus", result.status)
         if (result.status !== 200 ) {
             logger.warn("Got status: " + result.status);
