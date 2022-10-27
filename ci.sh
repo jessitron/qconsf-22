@@ -48,7 +48,7 @@ function doTheThing() {
     echo "The following services were changed: $changedServices"
     for service in $changedServices; do
       serviceDataset=$(srcToServiceName $service)
-      echo "Creating marker in for $service in $serviceDataset"
+      echo "Creating marker in $serviceDataset for $service" 
       curl https://api.honeycomb.io/1/markers/$serviceDataset -X POST  \
         -H "X-Honeycomb-Team: $HONEYCOMB_API_KEY"  \
         -d "{\"message\":\"deploy $currentCommit \", \"type\":\"deploy\", \"start_time\":$startTime}"
