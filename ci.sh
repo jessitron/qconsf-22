@@ -12,6 +12,7 @@ function srcToServiceName() {
     echo "ad-service"
     return 0
   fi
+  echo "unknown-dataset"
 }
 
 function doTheThing() {
