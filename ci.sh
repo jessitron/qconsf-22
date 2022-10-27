@@ -32,13 +32,14 @@ function doTheThing() {
     return 0
   fi
 
-  echo "something happened!"
+  echo "something happened! These files changed:"
   git diff --name-only $prevCommit
   currentCommit=$(git rev-parse HEAD)
   changedServices=$(git diff --name-only $prevCommit | grep ^src | cut -d '/' -f 2)
   startTime=$(date +%s)
 
-  echo "let's deploy..."
+  echo "
+  let's deploy..."
   # skaffold run
   echo "insert skaffold run here"
   returned=$?
@@ -48,7 +49,7 @@ function doTheThing() {
     for service in $changedServices; do
       serviceDataset=$(srcToServiceName $service)
       echo "Creating marker in for $service in $serviceDataset"
-      curl https://api.honeycomb.io/1/markers/$service -X POST  \
+      curl https://api.honeycomb.io/1/markers/$serviceDataset -X POST  \
         -H "X-Honeycomb-Team: $HONEYCOMB_API_KEY"  \
         -d "{\"message\":\"deploy $currentCommit \", \"type\":\"deploy\", \"start_time\":$startTime}"
     done
