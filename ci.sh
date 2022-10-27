@@ -40,8 +40,8 @@ function doTheThing() {
 
   echo "
   let's deploy..."
-  # skaffold run
-  echo "insert skaffold run here"
+  skaffold run
+  #echo "insert skaffold run here"
   returned=$?
 
   if [[ -n $HONEYCOMB_API_KEY ]]; then
