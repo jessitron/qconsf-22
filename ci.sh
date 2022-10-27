@@ -2,8 +2,20 @@
 
 echo "Let's do some building!"
 
+function srcToServiceName() {
+  service=$1
+  if [[ $service == "paymentservice" ]]; then
+    echo "payment-service"
+    return 0
+  fi
+  if [[ $service == "adservice" ]]; then
+    echo "ad-service"
+    return 0
+  fi
+}
 
 function doTheThing() {
+  prevCommit=$(git rev-parse HEAD)
   output=$(git pull)
   returnCode=$?
   if [[ $? -ne 0 ]]; then
@@ -21,14 +33,34 @@ function doTheThing() {
   fi
 
   echo "something happened!"
+  git diff --name-only $prevCommit
+  currentCommit=$(git rev-parse HEAD)
+  changedServices=$(git diff --name-only $prevCommit | grep ^src | cut -d '/' -f 2)
+  startTime=$(date +%s)
 
   echo "let's deploy..."
-  skaffold run
+  # skaffold run
+  echo "insert skaffold run here"
   returned=$?
+
+  if [[ -n $HONEYCOMB_API_KEY ]]; then
+    echo "The following services were changed: $changedServices"
+    for service in $changedServices; do
+      serviceDataset=$(srcToServiceName $service)
+      echo "Creating marker in for $service in $serviceDataset"
+      curl https://api.honeycomb.io/1/markers/$service -X POST  \
+        -H "X-Honeycomb-Team: $HONEYCOMB_API_KEY"  \
+        -d "{\"message\":\"deploy $currentCommit \", \"type\":\"deploy\", \"start_time\":$startTime}"
+    done
+  else
+    echo "HONEYCOMB_API_KEY not defined"
+  fi
 
   if [[ $returned -ne 0 ]]; then
     cowsay "OH NO"
   fi
+
+  echo "😊 well that was exciting 😊 "
 }
 
 while :
