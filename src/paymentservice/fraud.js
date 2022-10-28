@@ -7,7 +7,6 @@ const logger = pino();
 const NoResult = {message: "no info"};
 
 module.exports.fraudCheck = async request => {
-    console.log("what does the request have? " + JSON.stringify(request));
     const span = otel.trace.getActiveSpan();
     span?.setAttribute("app.fraudCheck.start", true);
 
