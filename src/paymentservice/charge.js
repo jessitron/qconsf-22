@@ -13,26 +13,26 @@
 // limitations under the License.
 
 // Npm
-const cardValidator = require('simple-card-validator');
-const pino = require('pino');
-const { v4: uuidv4 } = require('uuid');
-const fraud = require('./fraud');
+const cardValidator = require("simple-card-validator");
+const pino = require("pino");
+const { v4: uuidv4 } = require("uuid");
+const fraud = require("./fraud");
 
 // Setup
 const logger = pino();
 
 // Functions
-module.exports.charge = async request => {
+module.exports.charge = async (request) => {
+  // const fraudResult = await fraud.fraudCheck(request);
+  // if (fraudResult.sus == true) {
+  //   logger.warn("This looks like fraud to us!");
+  //   // we aren't acting on the fraud check yet
+  // }
 
-  const fraudResult = await fraud.fraudCheck(request);
-  if (fraudResult.sus == true) {
-    logger.warn("This looks like fraud to us!");
-    // we aren't acting on the fraud check yet
-  }
-
-  const { creditCardNumber: number,
+  const {
+    creditCardNumber: number,
     creditCardExpirationYear: year,
-    creditCardExpirationMonth: month
+    creditCardExpirationMonth: month,
   } = request.creditCard;
   const { units, nanos, currencyCode } = request.amount;
   const currentMonth = new Date().getMonth() + 1;
@@ -41,21 +41,27 @@ module.exports.charge = async request => {
   const transactionId = uuidv4();
 
   const card = cardValidator(number);
-  const {card_type: cardType, valid } = card.getCardDetails();
+  const { card_type: cardType, valid } = card.getCardDetails();
 
   if (!valid) {
-    throw new Error('Credit card info is invalid.');
+    throw new Error("Credit card info is invalid.");
   }
 
-  if (!['visa', 'mastercard'].includes(cardType)) {
-    throw new Error(`Sorry, we cannot process ${cardType} credit cards. Only VISA or MasterCard is accepted.`);
-  }
-  
-  if ((currentYear * 12 + currentMonth) > (year * 12 + month)) {
-    throw new Error(`The credit card (ending ${lastFourDigits}) expired on ${month}/${year}.`);
+  if (!["visa", "mastercard"].includes(cardType)) {
+    throw new Error(
+      `Sorry, we cannot process ${cardType} credit cards. Only VISA or MasterCard is accepted.`
+    );
   }
 
-  logger.info(`Transaction ${transactionId}: ${cardType} ending ${lastFourDigits} | Amount: ${units}.${nanos} ${currencyCode}`);
+  if (currentYear * 12 + currentMonth > year * 12 + month) {
+    throw new Error(
+      `The credit card (ending ${lastFourDigits}) expired on ${month}/${year}.`
+    );
+  }
 
-  return { transactionId }
-}
+  logger.info(
+    `Transaction ${transactionId}: ${cardType} ending ${lastFourDigits} | Amount: ${units}.${nanos} ${currencyCode}`
+  );
+
+  return { transactionId };
+};
