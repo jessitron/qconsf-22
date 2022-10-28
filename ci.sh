@@ -46,12 +46,13 @@ function doTheThing() {
 
   if [[ -n $HONEYCOMB_API_KEY ]]; then
     echo "The following services were changed: $changedServices"
+    endTime=$(date +%s)
     for service in $changedServices; do
       serviceDataset=$(srcToServiceName $service)
       echo "Creating marker in $serviceDataset for $service" 
       curl https://api.honeycomb.io/1/markers/$serviceDataset -X POST  \
         -H "X-Honeycomb-Team: $HONEYCOMB_API_KEY"  \
-        -d "{\"message\":\"deploy $currentCommit \", \"type\":\"deploy\", \"start_time\":$startTime}"
+        -d "{\"message\":\"deploy $currentCommit \", \"type\":\"deploy\", \"start_time\":$startTime, \"end_time\":$endTime}"
     done
   else
     echo "HONEYCOMB_API_KEY not defined"
