@@ -2,8 +2,8 @@
   "products": [
     {
       "id": "OLJCESPC7Z",
-      "name": "National Park Foundation Explorascope",
-      "description": "The National Park Foundation’s (NPF) Explorascope 60AZ is a manual alt-azimuth, refractor telescope perfect for celestial viewing on the go. The NPF Explorascope 60 can view the planets, moon, star clusters and brighter deep sky objects like the Orion Nebula and Andromeda Galaxy.",
+      "name": "National Park Foundation Bee-Free Explorascope",
+      "description": "The National Park Foundation’s (NPF) Explorascope 60AZ is a manual alt-azimuth, bee-free refractor telescope perfect for celestial viewing on the go. It does not contain any live, angry bees. The NPF Explorascope 60 can view the planets, moon, star clusters and brighter deep sky objects like the Orion Nebula and Andromeda Galaxy. Note: when the package arrives, it may be emitting a loud buzzing noise. This is simply telescope parts settling after shipment and is not indicative of any live, angry bees contained within.",
       "picture": "/images/products/NationalParkFoundationExplorascope.jpg",
       "priceUsd": {
         "currencyCode": "USD",
@@ -14,9 +14,9 @@
     },
     {
       "id": "66VCHSJNUP",
-      "name": "Starsense Explorer Refractor Telescope",
-      "description": "The first telescope that uses your smartphone to analyze the night sky and calculate its position in real time. StarSense Explorer is ideal for beginners thanks to the app’s user-friendly interface and detailed tutorials. It’s like having your own personal tour guide of the night sky",
-      "picture": "/images/products/StarsenseExplorer.jpg",
+      "name": "Make Your Own Telescope Kit",
+      "description": "This incredible, user-friendly kit contains the materials you need to build your very own telescope. A fun project to do with children or adults who haven't lost their sense of wonder. Contents: 20 pounds silica sand, 1500 pounds bauxite ore containing minimum 40% aluminum, matches, four page instruction booklet.",
+      "picture": "/images/products/BauxiteOre.jpg",
       "priceUsd": {
         "currencyCode": "USD",
         "units": 349,
@@ -26,12 +26,12 @@
     },
     {
       "id": "1YMWWN1N4O",
-      "name": "Eclipsmart Travel Refractor Telescope",
-      "description": "Dedicated white-light solar scope for the observer on the go. The 50mm refracting solar scope uses Solar Safe, ISO compliant, full-aperture glass filter material to ensure the safest view of solar events.  The kit comes complete with everything you need, including the dedicated travel solar scope, a Solar Safe finderscope, tripod, a high quality 20mm (18x) Kellner eyepiece and a nylon backpack to carry everything in.  This Travel Solar Scope makes it easy to share the Sun as well as partial and total solar eclipses with the whole family and offers much higher magnifications than you would otherwise get using handheld solar viewers or binoculars.",
-      "picture": "/images/products/EclipsmartTravelRefractorTelescope.jpg",
+      "name": "Hubble Space Telescope",
+      "description": "Lightly used optical space telescope. Willing to part with it cheap but you must pick it up from low Earth orbit by Wednesday at the latest.",
+      "picture": "/images/products/HubbleSpaceTelescope.jpg",
       "priceUsd": {
         "currencyCode": "USD",
-        "units": 129,
+        "units": 1,
         "nanos": 950000000
       },
       "categories": ["telescopes", "travel"]
