@@ -12,6 +12,54 @@ function srcToServiceName() {
     echo "ad-service"
     return 0
   fi
+  if [[ $service == "cartservice" ]]; then
+    echo "cart-service"
+    return 0
+  fi
+  if [[ $service == "checkoutservice" ]]; then
+    echo "checkout-service"
+    return 0
+  fi
+  if [[ $service == "currencyservice" ]]; then
+    echo "currency-service"
+    return 0
+  fi
+  if [[ $service == "featureflagservice" ]]; then
+    echo "featureflag-service"
+    return 0
+  fi
+  if [[ $service == "frontend" ]]; then
+    echo "frontend"
+    return 0
+  fi
+  if [[ $service == "cartservice" ]]; then
+    echo "cart-service"
+    return 0
+  fi
+  if [[ $service == "loadgenerator" ]]; then
+    echo "loadgenerator"
+    return 0
+  fi
+  if [[ $service == "productcatalogservice" ]]; then
+    echo "product-catalog-service"
+    return 0
+  fi
+  if [[ $service == "quoteservice" ]]; then
+    echo "quote-service"
+    return 0
+  fi
+  if [[ $service == "recommendationservice" ]]; then
+    echo "recommendation-service"
+    return 0
+  fi
+  if [[ $service == "shippingservice" ]]; then
+    echo "shipping-service"
+    return 0
+  fi
+  if [[ $service == "whataservice" ]]; then
+    echo "whataservice"
+    return 0
+  fi
   echo "unknown-dataset"
 }
 
