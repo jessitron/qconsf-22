@@ -23,11 +23,11 @@ const logger = pino();
 
 // Functions
 module.exports.charge = async (request) => {
-  // const fraudResult = await fraud.fraudCheck(request);
-  // if (fraudResult.sus == true) {
-  //   logger.warn("This looks like fraud to us!");
-  //   // we aren't acting on the fraud check yet
-  // }
+  const fraudResult = await fraud.fraudCheck(request);
+  if (fraudResult.sus == true) {
+    logger.warn("This looks like fraud to us!");
+    // we aren't acting on the fraud check yet
+  }
 
   const {
     creditCardNumber: number,
