@@ -13,7 +13,6 @@
 // limitations under the License.
 
 // Npm
-const {context, propagation, trace} = require('@opentelemetry/api');
 const cardValidator = require('simple-card-validator');
 const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
@@ -25,10 +24,8 @@ const tracer = trace.getTracer('paymentservice');
 
 // Functions
 module.exports.charge = async request => {
-  const span = tracer.startSpan('charge');
 
   const fraudResult = await fraud.fraudCheck(request);
-  span.setAttribute("app.fraud.result", JSON.stringify(fraudResult))
   if (fraudResult.sus == true) {
     logger.warn("This looks like fraud to us!");
     // we aren't acting on the fraud check yet
@@ -47,11 +44,6 @@ module.exports.charge = async request => {
   const card = cardValidator(number);
   const {card_type: cardType, valid } = card.getCardDetails();
 
-  span.setAttributes({
-    'app.payment.card_type': cardType,
-    'app.payment.card_valid': valid
-  });
-
   if (!valid) {
     throw new Error('Credit card info is invalid.');
   }
@@ -63,16 +55,6 @@ module.exports.charge = async request => {
   if ((currentYear * 12 + currentMonth) > (year * 12 + month)) {
     throw new Error(`The credit card (ending ${lastFourDigits}) expired on ${month}/${year}.`);
   }
-
-  // check baggage for synthetic_request=true, and add charged attribute accordingly
-  const baggage = propagation.getBaggage(context.active());
-  if (baggage && baggage.getEntry("synthetic_request") && baggage.getEntry("synthetic_request").value == "true") {
-    span.setAttribute('app.payment.charged', false);
-  } else {
-    span.setAttribute('app.payment.charged', true);
-  }
-
-  span.end();
 
   logger.info(`Transaction ${transactionId}: ${cardType} ending ${lastFourDigits} | Amount: ${units}.${nanos} ${currencyCode}`);
 
