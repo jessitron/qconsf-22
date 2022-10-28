@@ -26,5 +26,5 @@ Then run:
 From the root directory, run:
 
 ```sh
-docker compose build recommendationservice
+docker build -f src/recommendationservice/Dockerfile .
 ```
