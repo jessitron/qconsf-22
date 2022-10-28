@@ -20,7 +20,6 @@ const fraud = require('./fraud');
 
 // Setup
 const logger = pino();
-const tracer = trace.getTracer('paymentservice');
 
 // Functions
 module.exports.charge = async request => {
