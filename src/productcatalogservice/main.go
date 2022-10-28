@@ -23,6 +23,10 @@ import (
 	"strings"
 
 	pb "github.com/opentelemetry/opentelemetry-demo/src/productcatalogservice/genproto/hipstershop"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/sdk/resource"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 
 	"github.com/sirupsen/logrus"
@@ -45,8 +49,28 @@ func init() {
 	catalog = readCatalogFile()
 }
 
+// newResource returns a resource describing this application.
+func newResource() *resource.Resource {
+	r, _ := resource.Merge(
+		resource.Default(),
+		resource.NewWithAttributes(
+			semconv.SchemaURL,
+			semconv.ServiceNameKey.String("product-catalog-service"),
+		),
+	)
+	return r
+}
 
 func main() {
+
+	tp := trace.NewTracerProvider(trace.WithResource(newResource()))
+	defer func() {
+		if err := tp.Shutdown(context.Background()); err != nil {
+			log.Fatal(err)
+		}
+	}()
+	otel.SetTracerProvider(tp)
+	tracer := otel.GetTracerProvider().Tracer("product-catalog-service")
 
 	svc := &productCatalog{}
 	var port string
@@ -60,7 +84,22 @@ func main() {
 		log.Fatalf("TCP Listen: %v", err)
 	}
 
-	srv := grpc.NewServer()
+	srv := grpc.NewServer(
+		grpc.WithUnaryInterceptor(
+			func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+				ctx, span := tracer.Start(ctx, method)
+				defer span.End()
+				return invoker(ctx, method, req, reply, cc, opts)
+			},
+		),
+		grpc.WithStreamInterceptor(
+			func(ctx context.Context, desc *grpc.StreamDesc, cc *grpc.ClientConn, method string, streamer grpc.Streamer, opts ...grpc.CallOption) (grpc.ClientStream, error) {
+				ctx, span := tracer.Start(ctx, method)
+				defer span.End()
+				return streamer(ctx, desc, cc, method, opts)
+			},
+		),
+	)
 
 	pb.RegisterProductCatalogServiceServer(srv, svc)
 	healthpb.RegisterHealthServer(srv, svc)
@@ -70,6 +109,7 @@ func main() {
 type productCatalog struct {
 	featureFlagSvcAddr string
 	pb.UnimplementedProductCatalogServiceServer
+	tracer trace.Tracer
 }
 
 func readCatalogFile() []*pb.Product {
