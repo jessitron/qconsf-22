@@ -7,8 +7,8 @@ in a kubernetes cluster.
 
 - Helm 3.0+
 
-from the root of this repo, to install (or update) a realease with the name "workshop-release"
+from the root of this repo, to install (or update) a realease with the name "qcon-workshop"
 
 ```console
-helm upgrade -i workshop-release chart
+helm upgrade -i qcon-workshop chart
 ```

@@ -203,7 +203,7 @@ components:
       - name: PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION
         value: python
       - name: FEATURE_FLAG_GRPC_SERVICE_ADDR
-        value: "workshop-release-featureflag-service:50053"
+        value: "{{ .Release.Name }}-featureflag-service:50053"
     podAnnotations: {}
     #  instrumentation.opentelemetry.io/inject-python: "true"
 
