@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Let's do some building!"
+cowsay "Let's do some building!"
 
 function srcToServiceName() {
   service=$1
