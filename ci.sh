@@ -39,8 +39,7 @@ function doTheThing() {
   changedServices=$(git diff --name-only $prevCommit | grep ^src | cut -d '/' -f 2)
   startTime=$(date +%s)
 
-  echo "
-  let's deploy..."
+  cowsay "let's deploy..."
   skaffold run
   #echo "insert skaffold run here"
   returned=$?
