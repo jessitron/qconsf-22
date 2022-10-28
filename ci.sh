@@ -60,7 +60,7 @@ function srcToServiceName() {
     echo "whataservice"
     return 0
   fi
-  echo "unknown-dataset"
+  echo "__all__"
 }
 
 function doTheThing() {
