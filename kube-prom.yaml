@@ -23,7 +23,7 @@ prometheus:
       - job_name: otelcol
         static_configs:
           - targets:
-              - workshop-release-otelcol.default.svc.cluster.local:9464
+              - qcon-workshop-otelcol.default.svc.cluster.local:9464
       - job_name: prometheus
         static_configs:
           - targets:
