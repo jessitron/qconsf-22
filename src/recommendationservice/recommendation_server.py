@@ -21,7 +21,6 @@ from concurrent import futures
 
 # Pip
 import grpc
-from opentelemetry import trace, metrics
 
 
 # Local
@@ -41,8 +40,6 @@ first_run = True
 class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
     def ListRecommendations(self, request, context):
         prod_list = get_product_list(request.product_ids)
-        span = trace.get_current_span()
-        span.set_attribute("app.products_recommended.count", len(prod_list))
         logger.info(f"[Recv ListRecommendations] product_ids={prod_list}")
         # build and return response
         response = demo_pb2.ListRecommendationsResponse()
@@ -65,50 +62,41 @@ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
 def get_product_list(request_product_ids):
     global first_run
     global cached_ids
-    with tracer.start_as_current_span("get_product_list") as span:
-        max_responses = 5
+    max_responses = 5
 
-        # Formulate the list of characters to list of strings
-        request_product_ids_str = ''.join(request_product_ids)
-        request_product_ids = request_product_ids_str.split(',')
+    # Formulate the list of characters to list of strings
+    request_product_ids_str = ''.join(request_product_ids)
+    request_product_ids = request_product_ids_str.split(',')
 
-        # Feature flag scenario - Cache Leak
-        if check_feature_flag("recommendationCache"):
-            span.set_attribute("app.recommendation.cache_enabled", True)
-            if random.random() < 0.5 or first_run:
-                first_run = False
-                span.set_attribute("app.cache_hit", False)
-                logger.info("cache miss")
-                cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
-                response_ids = [x.id for x in cat_response.products]
-                cached_ids = cached_ids + response_ids
-                cached_ids = cached_ids + cached_ids[:len(cached_ids) // 4]
-                product_ids = cached_ids
-            else:
-                span.set_attribute("app.cache_hit", True)
-                logger.info("cache hit")
-                product_ids = cached_ids
-        else:
-            span.set_attribute("app.recommendation.cache_enabled", False)
+    # Feature flag scenario - Cache Leak
+    if check_feature_flag("recommendationCache"):
+        if random.random() < 0.5 or first_run:
+            first_run = False
+            logger.info("cache miss")
             cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
-            product_ids = [x.id for x in cat_response.products]
+            response_ids = [x.id for x in cat_response.products]
+            cached_ids = cached_ids + response_ids
+            cached_ids = cached_ids + cached_ids[:len(cached_ids) // 4]
+            product_ids = cached_ids
+        else:
+            logger.info("cache hit")
+            product_ids = cached_ids
+    else:
+        cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
+        product_ids = [x.id for x in cat_response.products]
 
-        span.set_attribute("app.products.count", len(product_ids))
 
-        # Create a filtered list of products excluding the products received as input
-        filtered_products = list(set(product_ids) - set(request_product_ids))
-        num_products = len(filtered_products)
-        span.set_attribute("app.filtered_products.count", num_products)
-        num_return = min(max_responses, num_products)
+    # Create a filtered list of products excluding the products received as input
+    filtered_products = list(set(product_ids) - set(request_product_ids))
+    num_products = len(filtered_products)
+    num_return = min(max_responses, num_products)
 
-        # Sample list of indicies to return
-        indices = random.sample(range(num_products), num_return)
-        # Fetch product ids from indices
-        prod_list = [filtered_products[i] for i in indices]
+    # Sample list of indicies to return
+    indices = random.sample(range(num_products), num_return)
+    # Fetch product ids from indices
+    prod_list = [filtered_products[i] for i in indices]
 
-        span.set_attribute("app.filtered_products.list", prod_list)
-
-        return prod_list
+    return prod_list
 
 
 def must_map_env(key: str):
@@ -123,11 +111,6 @@ def check_feature_flag(flag_name: str):
     return flag.enabled
 
 if __name__ == "__main__":
-    # Initialize Traces and Metrics
-    tracer = trace.get_tracer_provider().get_tracer("recommendationservice")
-    meter = metrics.get_meter_provider().get_meter("recommendationservice")
-    rec_svc_metrics = init_metrics(meter)
-
     port = must_map_env('RECOMMENDATION_SERVICE_PORT')
     catalog_addr = must_map_env('PRODUCT_CATALOG_SERVICE_ADDR')
     ff_addr = must_map_env('FEATURE_FLAG_GRPC_SERVICE_ADDR')

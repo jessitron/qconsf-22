@@ -3,7 +3,6 @@
 This service provides recommendations for other products based on the currently
 selected product.
 
-Note how the Dockerfile calls some opentelemetry executables to get the instrumentation in there.
 
 ## Local Build
 
